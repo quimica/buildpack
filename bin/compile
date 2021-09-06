@@ -23,27 +23,23 @@ echo '-----> nginx-buildpack: Added start-nginx to app/bin'
 cp bin/start-nginx-solo "$BUILD_DIR/bin/"
 echo '-----> nginx-buildpack: Added start-nginx-solo to app/bin'
 
-mkdir -p "$BUILD_DIR/config"
+mkdir -p "$BUILD_DIR/conf"
 
-if [[ ! -f $BUILD_DIR/config/mime.types ]]; then
-	cp "$BUILD_DIR/nginx/mime.types" "$BUILD_DIR/config/"
-	echo '-----> nginx-buildpack: Default mime.types copied to app/config/'
+if [[ ! -f $BUILD_DIR/conf/mime.types ]]; then
+	cp "$BUILD_DIR/nginx/mime.types" "$BUILD_DIR/conf/"
+	echo '-----> nginx-buildpack: Default mime.types copied to app/conf/'
 else
-	echo '-----> nginx-buildpack: Custom mime.types found in app/config.'
+	echo '-----> nginx-buildpack: Custom mime.types found in app/conf.'
 fi
 
-if [[ ! -f $BUILD_DIR/config/nginx.conf.erb ]]; then
-	cp config/nginx.conf.erb "$BUILD_DIR/config/"
-	echo '-----> nginx-buildpack: Default config copied to app/config.'
+if [[ ! -f $BUILD_DIR/conf/nginx.conf.erb ]]; then
+	cp conf/nginx.conf.erb "$BUILD_DIR/conf/"
+	echo '-----> nginx-buildpack: Default config copied to app/conf.'
 else
-	echo '-----> nginx-buildpack: Custom config found in app/config.'
+	echo '-----> nginx-buildpack: Custom config found in app/conf.'
 fi
 
 # cleanup
 rm -r "$BUILD_DIR/nginx"
-
-#wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$MAXMIND_KEY&suffix=tar.gz" -O "GeoLite2-Country.tar.gz"
-#tar xzf "GeoLite2-Country.tar.gz"
-#mv GeoLite2-Country*/GeoLite2-Country.mmdb "$BUILD_DIR/config/"
 
 exit 0
